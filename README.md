@@ -1,2 +1,2 @@
 # SMRC
-Easy remote crontrol media function over serial port
+Easy remote control media function over serial port
