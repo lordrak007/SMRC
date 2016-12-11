@@ -89,6 +89,10 @@ namespace SerialMediaRemoteControl.Objects
         public Communication()
         {
             ArduinoAutoSearch = false;
+            PortName = "COM4";
+            BaudRate = 9600;
+            Parity = System.IO.Ports.Parity.None;
+            DataBits = 8;
         }
         public string PortName { get; set; }
         public int BaudRate { get; set; }
@@ -115,11 +119,11 @@ namespace SerialMediaRemoteControl.Objects
     {
         public Processing()
         {
-            ValueSeparator = ':';
+            ValueSeparator = ":";
             //CaseSensitiveCommands = false;
-            ShowErrorsInTrayBubble = true;
+            ShowErrorsInTrayBubble = false;
         }
-        public char ValueSeparator { get; set; }
+        public string ValueSeparator { get; set; }
         //public bool CaseSensitiveCommands { get; set; }
 
         public bool ShowErrorsInTrayBubble { get; set; }

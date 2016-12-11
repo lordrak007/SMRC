@@ -44,13 +44,13 @@ namespace SerialMediaRemoteControl.Helpers
             switch (LoggingEvent.Level.Name)
             {
                 case "DEBUG":
-                    TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Info);
+                    //TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Info);
                     break;
                 case "INFO":
-                    TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Info);
+                    //TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Info);
                     break;
                 case "WARN":
-                    TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Warning);
+                    //TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Warning);
                     break;
                 case "ERROR":
                     TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Error);

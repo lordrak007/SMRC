@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E86EE3BE-6D1E-472E-89CF-AFFD650EFE3D}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MedialniSeriovyOvladac</RootNamespace>
-    <AssemblyName>MedialniSeriovyOvladac</AssemblyName>
+    <RootNamespace>SerialMediaRemoteControl</RootNamespace>
+    <AssemblyName>SMRC</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

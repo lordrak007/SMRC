@@ -21,7 +21,7 @@ namespace SerialMediaRemoteControl.Helpers
 
         private void parseDo(string input)
         {
-            string[] inArray = input.Split(Main.cfg.Processing.ValueSeparator);
+            string[] inArray = input.Split(Main.cfg.Processing.ValueSeparator.ToCharArray());
             var val = inArray.Length == 2 ? inArray[1] : ""; //parse value
             if (inArray.Length == 2)
                 log.DebugFormat("Found value \"{0}\" for entry \"{1}\"", inArray[0], inArray[1]);

@@ -1,6 +1,5 @@
 ﻿using log4net;
 using SerialMediaRemoteControl.Objects;
-using SerialMediaRemoteControl.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,24 +16,18 @@ namespace SerialMediaRemoteControl
         public static Config cfg = new Config();
         SerialCommunication sc;
 
+
+
         public Main(string[] args)
         {
             arguments = new Helpers.Arguments(args);
             new TrayIkona(); //show try icon
 
             cfg = Config.Load();
-            if (arguments["ged"] != null)
-            {
-                cfg.GenerateExampleData();
-                log.Info("Example data generated. Exiting.");
-                Application.Exit();
-            }
-            if (arguments["GetCommands"] != null || arguments["gc"] != null)
-            {
-                Enum.GetNames(typeof(WindowsInput.Native.VirtualKeyCode)).ToList().ForEach(item => Console.WriteLine(item.ToString()));
-                Console.WriteLine("VOLUME_SET:90");
-                Application.Exit();
-            }
+            if (cfg == null)
+                cfg = new Config();
+
+            
 
             if (Main.cfg.Processing.ShowErrorsInTrayBubble)
                 BubbleAppender.Setup(true);
@@ -45,17 +38,16 @@ namespace SerialMediaRemoteControl
 
         }
 
-        void printHelp()
+
+
+        /// <summary>
+        /// Main exit. I am using form and console together so must exit more times :)
+        /// </summary>
+        /// <param name="exitcode"></param>
+        public static void Exit(int exitcode)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("SMRC - easy way to control media via serial communication");
-            sb.AppendLine();
-            sb.AppendLine("help | h             - show help");
-            sb.AppendLine("ged                  - Generate Example Data to config file");
-            sb.AppendLine("GetCommands | gc     - get supported commands");
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.AppendLine("Lordrak 2016");
+            Application.Exit(); //Stop loops in winforms
+            Environment.Exit(exitcode); //Stop console - equals main program
         }
     }
 
@@ -70,7 +62,8 @@ namespace SerialMediaRemoteControl
             ikona = new NotifyIcon();
             ikona.MouseClick += Ikona_MouseClick;
             //ikona.MouseDoubleClick += Ikona_MouseDoubleClick;
-            ikona.Icon = Resources.keyboard;
+            ikona.Icon = SerialMediaRemoteControl.Properties.Resources.keyboard;
+
             ikona.Visible = true;
 
             InitializeContexMenu();

@@ -22,6 +22,7 @@ namespace SerialMediaRemoteControl.Forms
         public CommandWindow()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.keyboard;
             this.FormClosing += CommandWindow_FormClosing;
             setupAppender();
         }
@@ -33,60 +34,59 @@ namespace SerialMediaRemoteControl.Forms
 
         private void btSend_Click(object sender, EventArgs e)
         {
-            comboBox.Items.Add(comboBox.Text);
+            string tmp = comboBox.Text; // theat because when you select value from combobox and then it is deleted (use it more then 10 times) command will be empty string
+            comboBox.Items.Add(tmp);
             if (comboBox.Items.Count > 10)
-                comboBox.Items.RemoveAt(1);
-            Helpers.RequestInterface.ProcessRequest(comboBox.Text);
-            //comboBox.Text = ""; //delete executed command
+                comboBox.Items.RemoveAt(0);
+            Helpers.RequestInterface.ProcessRequest(tmp);
+            comboBox.Text = tmp;
         }
 
 
         void setupAppender()
         {
-            if (!log.Logger.Repository.Configured)
-            {
-                rba = new RichTextBoxAppender(richTextBoxLog);
-                rba.Threshold = Level.All;
-                //rba.Layout = new PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message %n");
-                rba.Layout = new PatternLayout("%message %n");
-                LevelTextStyle ilts = new LevelTextStyle();
-                ilts.Level = Level.Info;
-                ilts.TextColor = Color.Black;
-                ilts.PointSize = 10.0f;
-                rba.AddMapping(ilts);
-                LevelTextStyle dlts = new LevelTextStyle();
-                dlts.Level = Level.Debug;
-                dlts.TextColor = Color.Blue;
-                dlts.PointSize = 10.0f;
-                rba.AddMapping(dlts);
-                LevelTextStyle wlts = new LevelTextStyle();
-                wlts.Level = Level.Warn;
-                wlts.TextColor = Color.Orange;
-                wlts.PointSize = 10.0f;
-                rba.AddMapping(wlts);
-                LevelTextStyle elts = new LevelTextStyle();
-                elts.Level = Level.Error;
-                elts.TextColor = Color.Crimson;
-                elts.BackColor = Color.Cornsilk;
-                elts.PointSize = 10.0f;
-                rba.AddMapping(elts);
+            rba = new RichTextBoxAppender(richTextBoxLog);
+            rba.Threshold = Level.All;
+            //rba.Layout = new PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message %n");
+            rba.Layout = new PatternLayout("%message %n");
+            LevelTextStyle ilts = new LevelTextStyle();
+            ilts.Level = Level.Info;
+            ilts.TextColor = Color.Black;
+            ilts.PointSize = 10.0f;
+            rba.AddMapping(ilts);
+            LevelTextStyle dlts = new LevelTextStyle();
+            dlts.Level = Level.Debug;
+            dlts.TextColor = Color.Blue;
+            dlts.PointSize = 10.0f;
+            rba.AddMapping(dlts);
+            LevelTextStyle wlts = new LevelTextStyle();
+            wlts.Level = Level.Warn;
+            wlts.TextColor = Color.Orange;
+            wlts.PointSize = 10.0f;
+            rba.AddMapping(wlts);
+            LevelTextStyle elts = new LevelTextStyle();
+            elts.Level = Level.Error;
+            elts.TextColor = Color.Crimson;
+            elts.BackColor = Color.Cornsilk;
+            elts.PointSize = 10.0f;
+            rba.AddMapping(elts);
 
-                BasicConfigurator.Configure(rba);
-                rba.ActivateOptions();
-                
+            BasicConfigurator.Configure(rba);
+            rba.ActivateOptions();
 
 
-                //RollingFileAppender fa = new RollingFileAppender();
-                //fa.AppendToFile = true;
-                //fa.Threshold = log4net.Core.Level.All;
-                //fa.RollingStyle = RollingFileAppender.RollingMode.Size;
-                //fa.MaxFileSize = 100000;
-                //fa.MaxSizeRollBackups = 3;
-                //fa.File = dskPath + @"\FgPleoraLog.txt";
-                //fa.Layout = new log4net.Layout.PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message (%logger{1}:%line)%n");
-                //log4net.Config.BasicConfigurator.Configure(fa);
-                //fa.ActivateOptions();
-            }
+
+            //RollingFileAppender fa = new RollingFileAppender();
+            //fa.AppendToFile = true;
+            //fa.Threshold = log4net.Core.Level.All;
+            //fa.RollingStyle = RollingFileAppender.RollingMode.Size;
+            //fa.MaxFileSize = 100000;
+            //fa.MaxSizeRollBackups = 3;
+            //fa.File = dskPath + @"\FgPleoraLog.txt";
+            //fa.Layout = new log4net.Layout.PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message (%logger{1}:%line)%n");
+            //log4net.Config.BasicConfigurator.Configure(fa);
+            //fa.ActivateOptions();
+
         }
     }
 }
