@@ -16,10 +16,13 @@ namespace SerialMediaRemoteControl
         public static Config cfg = new Config();
         SerialCommunication sc;
 
-
+        
 
         public Main(string[] args)
         {
+            log.InfoFormat("Starting SRMC {0}", Environment.Version);
+            this.ThreadExit += Main_ThreadExit;
+
             arguments = new Helpers.Arguments(args);
             new TrayIkona(); //show try icon
 
@@ -34,8 +37,23 @@ namespace SerialMediaRemoteControl
             Helpers.RequestInterface.Initialize();
             //start serial port
             sc = new SerialCommunication();
+            
 
+        }
 
+        /// <summary>
+        /// Catch exiting to clone port and clean onther garbage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Main_ThreadExit(object sender, EventArgs e)
+        {
+            //clan garbage
+            if (sc.Instance != null && sc.Instance.IsOpen)
+            {
+                sc.Instance.Close();
+            }
+            log.Info("Exiting");
         }
 
 

@@ -24,6 +24,7 @@ namespace SerialMediaRemoteControl.Forms
             InitializeComponent();
             this.Icon = Properties.Resources.keyboard;
             this.FormClosing += CommandWindow_FormClosing;
+            this.ActiveControl = comboBox;
             setupAppender();
         }
 

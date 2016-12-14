@@ -16,18 +16,64 @@ namespace SerialMediaRemoteControl.Helpers
 {
     public class log4netHelper
     {
-        public static void AddConsoleAppender()
+        public static void AddConsoleAppender(bool color = false)
         {
             //var layout = new PatternLayout(@"%date [%thread] %-5level %c - %m%n");
             var layout = new PatternLayout(@"%-5level - %m%n");
             layout.ActivateOptions();
-            var _log4netAppender = new ConsoleAppender
+            if (color)
             {
-                Layout = layout,
-                Name = "ConsoleAppender"
-            };
-            _log4netAppender.ActivateOptions();
-            BasicConfigurator.Configure(_log4netAppender);
+                var _log4netAppender = new ColoredConsoleAppender
+                {
+                    Layout = layout,
+                    Name = "ConsoleAppender"
+                };
+                _log4netAppender.AddMapping(new ColoredConsoleAppender.LevelColors
+                {
+                    Level = Level.Debug,
+                    ForeColor = ColoredConsoleAppender.Colors.Cyan
+                 | ColoredConsoleAppender.Colors.HighIntensity
+                });
+                _log4netAppender.AddMapping(new ColoredConsoleAppender.LevelColors
+                {
+                    Level = Level.Info,
+                    ForeColor = ColoredConsoleAppender.Colors.Green
+                        | ColoredConsoleAppender.Colors.HighIntensity
+                });
+                _log4netAppender.AddMapping(new ColoredConsoleAppender.LevelColors
+                {
+                    Level = Level.Warn,
+                    ForeColor = ColoredConsoleAppender.Colors.Purple
+                        | ColoredConsoleAppender.Colors.HighIntensity
+                });
+                _log4netAppender.AddMapping(new ColoredConsoleAppender.LevelColors
+                {
+                    Level = Level.Error,
+                    ForeColor = ColoredConsoleAppender.Colors.Red
+                        | ColoredConsoleAppender.Colors.HighIntensity
+                });
+                _log4netAppender.AddMapping(new ColoredConsoleAppender.LevelColors
+                {
+                    Level = Level.Fatal,
+                    ForeColor = ColoredConsoleAppender.Colors.White
+                        | ColoredConsoleAppender.Colors.HighIntensity,
+                    BackColor = ColoredConsoleAppender.Colors.Red
+                });
+                _log4netAppender.ActivateOptions();
+                BasicConfigurator.Configure(_log4netAppender);
+            }
+            else
+            {
+                var _log4netAppender = new ConsoleAppender
+                {
+                    Layout = layout,
+                    Name = "ConsoleAppender"
+                };
+                _log4netAppender.ActivateOptions();
+                BasicConfigurator.Configure(_log4netAppender);
+            }
+            
+            
         }
     }
 
@@ -50,7 +96,7 @@ namespace SerialMediaRemoteControl.Helpers
                     //TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Info);
                     break;
                 case "WARN":
-                    //TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Warning);
+                    TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Warning);
                     break;
                 case "ERROR":
                     TrayIkona.ShowBaloonTip(2000, LoggingEvent.Level.Name, RenderLoggingEvent(LoggingEvent), ToolTipIcon.Error);

@@ -16,7 +16,14 @@ namespace SerialMediaRemoteControl.Helpers
         public Request()
         {
             //load mapping from config
-            Main.cfg.MapCommands.ForEach(i => mapCommands.Add(i.CustomKey, i.MappedValue));
+            log.DebugFormat("Found {0} command mapping(s)", Main.cfg.MapCommands.Count);
+            foreach (var command in Main.cfg.MapCommands)
+            {
+                if (!MapCommands.ContainsKey(command.CustomKey))
+                    mapCommands.Add(command.CustomKey, command.MappedValue);
+                else
+                    log.WarnFormat("CustomKey {0} is allready added", command.CustomKey);
+            }
         }
 
         private void parseDo(string input)

@@ -36,9 +36,9 @@ namespace SerialMediaRemoteControl.Objects
             Communication.Parity = System.IO.Ports.Parity.None;
             Communication.BaudRate = 9600;
             Communication.DataBits = 8;
-            Communication.ArduinoAutoSearch = false;
-            Communication.ArduinoAutoSearchRequest = "RemoteInit";
-            Communication.ArduinoAutoSearchResponce = "InitComplete";
+            Communication.DeviceAutoSearch = false;
+            Communication.DeviceHeloMessage = "RemoteInit";
+            Communication.DeviceEhloMessage = "InitComplete";
 
             MapCommands.Add(new MapCommand("VU", "VOLUME_UP"));
             MapCommands.Add(new MapCommand("VD", "VOLUME_DOWN"));
@@ -88,7 +88,7 @@ namespace SerialMediaRemoteControl.Objects
     {
         public Communication()
         {
-            ArduinoAutoSearch = false;
+            DeviceAutoSearch = false;
             PortName = "COM4";
             BaudRate = 9600;
             Parity = System.IO.Ports.Parity.None;
@@ -101,15 +101,19 @@ namespace SerialMediaRemoteControl.Objects
         /// <summary>
         /// Try autodetect arduino
         /// </summary>
-        public bool ArduinoAutoSearch { get; set; }
+        public bool DeviceAutoSearch { get; set; }
         /// <summary>
-        /// Test message to arduino
+        /// Test message to arduino. Initial message to start communication.
         /// </summary>
-        public string ArduinoAutoSearchRequest { get; set; }
+        public string DeviceHeloMessage { get; set; }
         /// <summary>
-        /// Responce from arduino
+        /// Responce from arduino. Responce from device. Used to detect if is it device what we are looking for.
         /// </summary>
-        public string ArduinoAutoSearchResponce { get; set; }
+        public string DeviceEhloMessage { get; set; }
+        /// <summary>
+        /// Preffered baudRates when testing connection
+        /// </summary>
+        public int[] DeviceAutoSearchPrefferedBaudRates { get; set; }
     }
 
     /// <summary>
