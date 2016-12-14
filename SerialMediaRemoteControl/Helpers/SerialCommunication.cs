@@ -55,7 +55,7 @@ namespace SerialMediaRemoteControl.Helpers
             log.Info("Waiting device to connect");
             TrayIkona.ShowBaloonTip(5000, "Waiting", "Waiting device to connect", System.Windows.Forms.ToolTipIcon.Info);
             
-            int[] baudRates = { 4800, 9600, 14400, 19200, 38400, 57600 };
+            int[] baudRates = Main.cfg.Communication.DeviceAutoSearchPrefferedBaudRates;
             if (reconnecting)
                 baudRates = new int[] { Main.cfg.Communication.BaudRate };
 
@@ -76,6 +76,7 @@ namespace SerialMediaRemoteControl.Helpers
                 {
                     foreach (int baudRate in baudRates)
                     {
+                        log.DebugFormat("Searching device on {0} using {1} baud rate", port, baudRate);
                         SerialPort sp = new SerialPort(port, baudRate, Parity.None, 8);
                         try
                         {
@@ -85,16 +86,19 @@ namespace SerialMediaRemoteControl.Helpers
                                 sp.WriteLine(ask);
                             if (!string.IsNullOrEmpty(responce))
                             {
-                                sp.ReadTimeout =2000;
+                                sp.ReadTimeout =1000;
                                 int tries = 0;
                                 while (!responceOk)
                                 {
-                                    if (tries > 4)
+                                    if (tries > 3)
                                         break;
                                     try
                                     {
                                         tries++;
-                                        if (sp.ReadLine() == responce)
+                                        string intRes = sp.ReadLine().Trim();
+                                        if (!string.IsNullOrEmpty(intRes))
+                                            log.DebugFormat("Received responce:{0}", intRes);
+                                        if (intRes == responce)
                                             responceOk = true;
                                     }
                                     catch
@@ -145,6 +149,7 @@ namespace SerialMediaRemoteControl.Helpers
                 else // maybe log only debug and continue searching
                 {
                     log.Debug("Autosearch don't found any device. I will try it again");
+                    System.Threading.Thread.Sleep(2000); // take a time
                 }  
             }
         }

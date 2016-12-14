@@ -72,7 +72,7 @@ namespace SerialMediaRemoteControl.Objects
             }
             catch (Exception ex)
             {
-                log.Error("Can not load configuration.", ex);
+                log.Error("Can not load configuration. "+ex.Message);
                 return null;
             }
         }
@@ -93,6 +93,7 @@ namespace SerialMediaRemoteControl.Objects
             BaudRate = 9600;
             Parity = System.IO.Ports.Parity.None;
             DataBits = 8;
+            DeviceAutoSearchPrefferedBaudRates = new int[] { 4800, 9600, 14400, 19200, 38400, 57600 };
         }
         public string PortName { get; set; }
         public int BaudRate { get; set; }

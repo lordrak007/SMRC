@@ -31,11 +31,15 @@ namespace SerialMediaRemoteControl
             var arguments = new Helpers.Arguments(args);
             if (arguments["ged"] != null)
             {
+                Helpers.log4netHelper.AddConsoleAppender(true);
                 cfg.GenerateExampleData();
+                log.Info("Config file created");
                 Environment.Exit(0);
             }
             if (arguments["GetCommands"] != null || arguments["gc"] != null)
             {
+                Helpers.log4netHelper.AddConsoleAppender(true);
+                log.Info("Here are supported commands:");
                 Enum.GetNames(typeof(WindowsInput.Native.VirtualKeyCode)).ToList().ForEach(item => Console.WriteLine(item.ToString()));
                 Console.WriteLine("VOLUME_SET:90");
                 Environment.Exit(0);
